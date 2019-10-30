@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-//spring.jpa.hibernate.ddl-auto=update - this line will auto update any entities created in my database with the regno. Will also create any entities. 
+//spring.jpa.hibernate.ddl-auto=update - this line will auto update any changes in entities created in my database with the regno - e.g. new columns. Will also generate a unique number 
 
 //data - for any information that will be required to be taken or added to the table. 
 
