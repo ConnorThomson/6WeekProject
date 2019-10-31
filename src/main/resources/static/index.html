@@ -3,26 +3,33 @@
 
 </script>
 <body style="margin: 0px; background-color:skyblue">
-<div style="position: absolute; background-color: midnightblue; height: 95px; width: 600px; top:0; left: 250">
-	<span style="position:relative; top:0; left: 5; font-size: 500%; color:white">
-		BanginTunes.com
-	</span>
-</div>
-<div style="position: absolute; top:100; left:250; background-color: midnightblue; height: 250px; width: 600px">
-	<BR>
-	<form action="Genres.html" method="POST">
-		<input type = "submit" id= "GenresButton" value="Genres" style="position:relative; top: 0; left: 250; font-size: 24px">
-	</form>
-	<BR>
-	<BR>
-	<form action="Under.html" method="POST">
-		<input type = "submit" id= "LoginButton" value="Login" style="position:relative; top: 0; left: 250; font-size: 24px">
-	</form>
-	<BR>
-	<BR>
-	<form action="Under.html" method="POST">
-		<input type = "submit" id= "SearchButton" value="Search" style="position:relative; top: 0; left: 250;font-size: 24px">
-	</form>
-</div>
+	<!--main title-->
+	<div id="titlehome" style="position: absolute; background-color: midnightblue; height: 95px; width: 600px; top:0; left: 250">
+		<span style="position:relative; top:0; left: 5; font-size: 500%; color:white">
+			BanginTunes.com
+		</span>
+	</div>
+	<!--end of main title-->
+	<!--start of menu options-->
+	<div  id= "menuhome" style="position: absolute; top:100; left:250; background-color: midnightblue; height: 250px; width: 600px">
+		<BR>
+		<!--button to genre list-->
+		<form action="Genres.html" method="POST">
+			<input type = "submit" id= "GenresButton" value="Genres" style="position:relative; top: 0; left: 250; font-size: 24px">
+		</form>
+		<BR>
+		<BR>
+		<!--button to get to login screen-->
+		<form action="Under.html" method="POST">
+			<input type = "submit" id= "LoginButton" value="Login" style="position:relative; top: 0; left: 250; font-size: 24px">
+		</form>
+		<BR>
+		<BR>
+		<!--button to get to search feature-->
+		<form action="Under.html" method="POST">
+			<input type = "submit" id= "SearchButton" value="Search" style="position:relative; top: 0; left: 250;font-size: 24px">
+		</form>
+	</div>
+	<!--end of start menu-->
 </body>
 </HTML>
