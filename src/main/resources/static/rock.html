@@ -14,6 +14,9 @@
         alert("Thanks - record has now been added!!!!!");  
     }
     //end of add function
+    //displaying the data
+
+    //end of display
     //start of searching by artist
     function searchArtist(){
         let artist = document.getElementById("rockartsea").value;
@@ -26,8 +29,19 @@
         Http.send();
     }
     //end of search by artist
+    //start of searching by song
+    function searchSong(){
+        let song = document.getElementById("rocksonsea").value;
+        var Http=new XMLHttpRequest();
+        Http.open("GET", "http://"+location.hostname+":9020/rock/findbysong/"+song);
+        Http.setRequestHeader("Content-Type", "application/json");
+        Http.onload=function(){
+            console.log(JSON.parse(Http.response))
+        }
+        Http.send();
+    }
 </script>
-<body style="background-color: skyblue;">
+<body style="background-color: skyblue; overflow:visible">
     <!--start of title-->
     <div id="rocktitle" style = "position:absolute; top:0; left:350; background-color: midnightblue; height:110; width: 600;">
         <span style="position: relative; top:5; left: 90; color: white; font-size: 500%;">
@@ -36,16 +50,16 @@
     </div>
     <!--end of title-->
     <!--start of code for creation of creation box with all buttons-->
-    <div id="rockadd" style="position: fixed; background-color: midnightblue; top:110; left: 0; height: 250; width: 300; color: white;">
+
+    <div>
+    <div id="rockadd" style="position: fixed; background-color: midnightblue; top:110; left: 0; height: 200; width: 300; color: white;">
         <pre style="font-size: 120%">
      Adding new songs
         </pre>
         <form>
             <pre>
 Artist:      <input id="rockartadd" type="text">
-            <br>
 Song Title:  <input id="rocktitadd" type="text">
-            <br>
 Link:        <input id="rocklinadd" type="text">
             </pre>
             <input id="rockconfirm" type="button" value="Submit" onclick="savedata()">
@@ -60,7 +74,7 @@ Link:        <input id="rocklinadd" type="text">
     </div>
     <!--end of back to genre button-->
     <!--search by artist feature-->
-    <div id="rockseaart" style="position: fixed; background-color: midnightblue; top:370; left: 0; height: 130; width: 300; color: white;">
+    <div id="rockseaart" style="position: fixed; background-color: midnightblue; top:320; left: 0; height: 130; width: 300; color: white;">
      <pre style="font-size: 120%;">    Search by Artist </pre>
         <form>
             <pre>
@@ -70,5 +84,15 @@ Artist:      <input id="rockartsea" type="text">
         </form>
     </div>
     <!-- end of search by artist feature-->
+    <div id="rockseaart" style="position:fixed; background-color: midnightblue; top:460; left: 0; height: 130; width: 300; color: white;">
+        <pre style="font-size: 120%;">    Search by SongTitle</pre>
+           <form>
+                <pre>
+Songtitle:      <input id="rocksonsea" type="text">
+                </pre>
+                <input id="rockseacon" type="button" value="submit" onclick="searchSong()">
+           </form>
+    </div>
+</div>
 </body>
 </html>
