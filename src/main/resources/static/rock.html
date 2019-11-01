@@ -14,8 +14,55 @@
         alert("Thanks - record has now been added!!!!!");  
     }
     //end of add function
+    //show all data
+    function showalldata(){
+        var Http=new XMLHttpRequest();
+        Http.open("GET","http://"+location.hostname+":9020/rock/showall");
+        Http.setRequestHeader("Content-Type","application/json");
+        Http.onload= function(){
+            screen(JSON.parse(Http.response));
+        };
+        Http.send();
+        };
+    //end of show all data
     //displaying the data
+    function screen(data){
+        var A = 0;
+        data.forEach(function(item){
+            var table = document.getElementById("rocktable");
+            var row =table.insertRow(-1);
 
+            var c1=row.insertCell(0);
+            var c2=row.insertCell(1);
+            var c3=row.insertCell(2);
+            var c4=row.insertCell(3);
+            var c5=row.insertCell(4);
+            var c6=row.insertCell(5);
+
+            var editButton = document.createElement("button");
+            var delButton = document.createElement("button");
+
+            editButton.innerText = "Edit";
+            delButton.innerText = "Delete";
+
+            editButton.addEventListener("click", function edit() {
+            editrock(edit, editButton, item, c2, c3, c4);
+            });
+
+            delButton.addEventListener("click", function () {
+            deleteProperty(item.songnum);
+            });
+
+            c1.innerHTML=item.songnum;
+            c2.innerHTML=item.artist;
+            c3.innerHTML=item.songtitle;
+            c4.innerHTML=item.link;
+            c5.appendChild(editButton);
+            c6.appendChild(delButton);
+            
+        });
+        A += A;
+    };
     //end of display
     //start of searching by artist
     function searchArtist(){
@@ -24,7 +71,7 @@
         Http.open("GET", "http://"+location.hostname+":9020/rock/findbyartist/"+artist);
         Http.setRequestHeader("Content-Type", "application/json");
         Http.onload=function(){
-            console.log(JSON.parse(Http.response))
+            screen(JSON.parse(Http.response))
         }
         Http.send();
     }
@@ -36,10 +83,11 @@
         Http.open("GET", "http://"+location.hostname+":9020/rock/findbysong/"+song);
         Http.setRequestHeader("Content-Type", "application/json");
         Http.onload=function(){
-            console.log(JSON.parse(Http.response))
+            screen(JSON.parse(Http.response))
         }
         Http.send();
     }
+    //end search by song
 </script>
 <body style="background-color: skyblue; overflow:visible">
     <!--start of title-->
@@ -66,9 +114,16 @@ Link:        <input id="rocklinadd" type="text">
         </form>
     </div>
     <!--end of code for creation box-->
+    <!-- show all button-->
+    <div>
+        <button id="butshow" onclick="showalldata()" style="position: absolute; top: 115; left: 550">
+             Show All
+        </button>
+    </div>
+    <!--end of show all button-->
     <!--back to genre button-->
     <div>
-        <button id="underback" onclick="location.href='Genres.html'" style="position: absolute; top: 115; left: 615">
+        <button id="underback" onclick="location.href='Genres.html'" style="position: absolute; top: 115; left: 640">
             BACK
         </button>
     </div>
@@ -80,19 +135,36 @@ Link:        <input id="rocklinadd" type="text">
             <pre>
 Artist:      <input id="rockartsea" type="text">
             </pre>
-            <input id="rockseacon" type="button" value="submit" onclick="searchArtist()">
+            <input id="rockseacon" type="button" value="Submit" onclick="searchArtist()">
         </form>
     </div>
     <!-- end of search by artist feature-->
+    <!-- start of search by song feature-->
     <div id="rockseaart" style="position:fixed; background-color: midnightblue; top:460; left: 0; height: 130; width: 300; color: white;">
         <pre style="font-size: 120%;">    Search by SongTitle</pre>
            <form>
                 <pre>
 Songtitle:      <input id="rocksonsea" type="text">
                 </pre>
-                <input id="rockseacon" type="button" value="submit" onclick="searchSong()">
+                <input id="rockseacon" type="button" value="Submit" onclick="searchSong()">
            </form>
     </div>
+    <!--end of search by song feature-->
+    <!--main table-->
+    <div style="position:absolute; background-color: midnightblue; top:150; left: 350; height: 1000; width: 1000; color: white;">
+        <table id="Rocksection" class="table" style="font-size: 150%; color: white; border: black">
+             <thead>
+                <th>Song Number</th>
+                <th>Artist</th>
+                <th>Song Title</th>
+                <th>Link</th>
+            </thead>
+            <tbody id="rocktable" class="container">
+
+            </tbody>
+        </table>
+    </div>
+    <!--end of main table-->
 </div>
 </body>
 </html>
