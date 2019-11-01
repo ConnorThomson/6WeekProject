@@ -38,53 +38,6 @@ public class RockService {
 		}
 		rock.deleteById(songsum);
 		return "Record deleted!! Thanks for helping out";
-		
-	}
-	public String updateRockArtist(Integer songnum, String artist) {
-		RockData local =rock.findBySongnum(songnum);
-		ArrayList <RockData> rockArrayList = rock.findAll();
-		if(local==null) {
-			return "Record has not been found - want to check that again????";
-		}
-		for(RockData X: rockArrayList) {
-			if(X.getSongnum()==songnum) {
-				X.setArtist(artist);
-				rock.save(X);
-			}
-		}
-		return "Record updated - thanks for helping out";
-	}
-	
-	public String updateRockSongTitle(Integer songnum, String songtitle) {
-		RockData local =rock.findBySongnum(songnum);
-		ArrayList <RockData> rockArrayList = rock.findAll();
-		if(local==null) {
-			return "Record has not been found - want to check that again????";
-		}
-		for(RockData X: rockArrayList) {
-			if(X.getSongnum()==songnum) {
-				X.setSongtitle(songtitle);
-				rock.save(X);
-			}
-		}
-		return "Record updated - thanks for helping out";
-	}
-	
-	public String updateRockLink(Integer songnum, String link) {
-		RockData local =rock.findBySongnum(songnum);
-		ArrayList <RockData> rockArrayList = rock.findAll();		
-		if(local==null) {
-			return "Record has not been found - want to check that again????";
-		}
-		for(RockData X: rockArrayList) {
-			if(X.getSongnum()==songnum) {
-				X.setLink("https://"+link);
-				rock.save(X);
-			}
-		}
-		
-		
-		return "Record updated - thanks for helping out";
 	}
 	
 	public String Updaterecord(RockData rdata) {

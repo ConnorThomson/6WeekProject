@@ -51,19 +51,4 @@ public class RockController {
 	public String deleteRock(@PathVariable Integer songnum) {
 		return rock.deleteRock(songnum);
 	}
-	
-	@PutMapping("/rock/updateartist/{songnum}/{artist}")
-	public String updateRockArtist(@PathVariable Integer songnum, @PathVariable String artist) {
-		return rock.updateRockArtist(songnum, artist);
-	}
-	
-	@PutMapping("/rock/updatesongtitle/{songnum}/{songtitle}")
-	public String updateRockSongTitle(@PathVariable Integer songnum, @PathVariable String songtitle) {
-		return rock.updateRockSongTitle(songnum, songtitle);
-	}
-	
-	@PutMapping("/rock/updatelink/{songnum}/{link}")// message that when link is updated - do not include the https://
-	public String updateLink(@PathVariable Integer songnum, @PathVariable String link) {
-		return rock.updateRockLink(songnum, link);
-	}
 }

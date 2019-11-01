@@ -1,14 +1,14 @@
 <html>
 <script>
 // function to add new entries to the database
-    function savedata(){
+function savedata(){
         var Http=new XMLHttpRequest();
-        Http.open("POST","http://"+location.hostname+":8081/rock/add");
+        Http.open("POST","http://"+location.hostname+":8081/pop/add");
         Http.setRequestHeader("Content-Type","application/json");
         let data={
-            "artist": document.getElementById("rockartadd").value,
-            "songtitle":document.getElementById("rocktitadd").value,
-            "link":document.getElementById("rocklinadd").value
+            "artist": document.getElementById("popartadd").value,
+            "songtitle":document.getElementById("poptitadd").value,
+            "link":document.getElementById("poplinadd").value
         };
         Http.send(JSON.stringify(data));
         alert("Thanks - record has now been added!!!!!"); 
@@ -17,7 +17,7 @@
     //show all data
     function showalldata(){
         var Http=new XMLHttpRequest();
-        Http.open("GET","http://"+location.hostname+":8081/rock/showall");
+        Http.open("GET","http://"+location.hostname+":8081/pop/showall");
         Http.setRequestHeader("Content-Type","application/json");
         Http.onload= function(){
             screen(JSON.parse(Http.response));
@@ -28,7 +28,7 @@
     //displaying the data
     function screen(data){
         var A = 0;
-        var table = document.getElementById("rocktable"); 
+        var table = document.getElementById("poptable"); 
         while (table.hasChildNodes()) {
                 table.removeChild(table.firstChild);
         }
@@ -49,11 +49,11 @@
             delButton.innerText = "Delete";
 
             editButton.addEventListener("click", function edit() {
-                editrock(item, row);
+                editPop(item, row);
             });
 
             delButton.addEventListener("click", function () {
-            deleteRock(item.songnum);
+            deletePop(item.songnum);
             });
 
             c1.innerHTML=item.songnum;
@@ -69,9 +69,9 @@
     //end of display
     //start of searching by artist
     function searchArtist(){
-        let artist = document.getElementById("rockartsea").value;
+        let artist = document.getElementById("popartsea").value;
         var Http=new XMLHttpRequest();
-        Http.open("GET", "http://"+location.hostname+":8081/rock/findbyartist/"+artist);
+        Http.open("GET", "http://"+location.hostname+":8081/pop/findbyartist/"+artist);
         Http.setRequestHeader("Content-Type", "application/json");
         Http.onload=function(){
             screen(JSON.parse(Http.response))
@@ -80,7 +80,7 @@
     }
     //end of search by artist
     //edit items
-    function editrock(info, row) {
+    function editPop(info, row) {
         while (row.hasChildNodes()) {
             row.removeChild(row.firstChild);
         }
@@ -106,7 +106,7 @@
         update.value="Update";
         update.onclick=function(){
             var Http=new XMLHttpRequest();
-             Http.open("PUT","http://"+location.hostname+":8081/rock/update");
+             Http.open("PUT","http://"+location.hostname+":8081/pop/update");
             Http.setRequestHeader("Content-Type","application/json");
             let data={
                 "songnum":songnum.value,
@@ -122,7 +122,7 @@
 
             
             Http.send(JSON.stringify(data));
-            alert("Thanks - record has now been added!!!!!"); 
+            alert("Thanks - record has now been updated!!!!!"); 
             };
         
         td1.appendChild(songnum);
@@ -146,9 +146,9 @@
         
     // });
     //finished editting items
-    function deleteRock(id) {
+    function deletePop(id) {
     const http = new XMLHttpRequest();
-    const url = 'http://'+location.hostname+':8081/rock/delete/' + id;
+    const url = 'http://'+location.hostname+':8081/pop/delete/' + id;
     http.open("DELETE", url);
     http.onload = function (e) {
         window.location.reload();
@@ -159,26 +159,26 @@
 </script>
 <body style="background-color: skyblue; overflow:visible">
     <!--start of title-->
-    <div id="rocktitle" style = "position:absolute; top:0; left:350; background-color: midnightblue; height:110; width: 600;">
+    <div id="poptitle" style = "position:absolute; top:0; left:350; background-color: midnightblue; height:110; width: 600;">
         <span style="position: relative; top:5; left: 90; color: white; font-size: 500%;">
-            Rock Playlist
+            Pop Playlist
         </span>
     </div>
     <!--end of title-->
     <!--start of code for creation of creation box with all buttons-->
 
     <div>
-    <div id="rockadd" style="position: fixed; background-color: midnightblue; top:110; left: 0; height: 200; width: 300; color: white;">
+    <div id="popadd" style="position: fixed; background-color: midnightblue; top:110; left: 0; height: 200; width: 300; color: white;">
         <pre style="font-size: 120%">
      Adding new songs
         </pre>
         <form>
             <pre>
-Artist:      <input id="rockartadd" type="text">
-Song Title:  <input id="rocktitadd" type="text">
-Link:        <input id="rocklinadd" type="text">
+Artist:      <input id="popartadd" type="text">
+Song Title:  <input id="poptitadd" type="text">
+Link:        <input id="poplinadd" type="text">
             </pre>
-            <input id="rockconfirm" type="button" value="Submit" onclick="savedata()">
+            <input id="popconfirm" type="button" value="Submit" onclick="savedata()">
         </form>
     </div>
     <!--end of code for creation box-->
@@ -197,26 +197,26 @@ Link:        <input id="rocklinadd" type="text">
     </div>
     <!--end of back to genre button-->
     <!--search by artist feature-->
-    <div id="rockseaart" style="position: fixed; background-color: midnightblue; top:320; left: 0; height: 130; width: 300; color: white;">
+    <div id="popseaart" style="position: fixed; background-color: midnightblue; top:320; left: 0; height: 130; width: 300; color: white;">
      <pre style="font-size: 120%;">    Search by Artist </pre>
         <form>
             <pre>
-Artist:      <input id="rockartsea" type="text">
+Artist:      <input id="popartsea" type="text">
             </pre>
-            <input id="rockseacon" type="button" value="Submit" onclick="searchArtist()">
+            <input id="popseacon" type="button" value="Submit" onclick="searchArtist()">
         </form>
     </div>
     <!-- end of search by artist feature-->
     <!--main table-->
     <div style="position:absolute; background-color: midnightblue; top:150; left: 350; height: 1000; width: 1000; color: white;">
-        <table id="Rocksection" class="table" style="font-size: 150%; color: white; border: black">
+        <table id="popsection" class="table" style="font-size: 150%; color: white; border: black">
              <thead>
                 <th>Song Number</th>
                 <th>Artist</th>
                 <th>Song Title</th>
                 <th>Link</th>
             </thead>
-            <tbody id="rocktable" class="container">
+            <tbody id="poptable" class="container">
 
             </tbody>
         </table>
