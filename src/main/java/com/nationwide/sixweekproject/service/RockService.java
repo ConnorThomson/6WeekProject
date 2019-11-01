@@ -82,6 +82,13 @@ public class RockService {
 				rock.save(X);
 			}
 		}
+		
+		
 		return "Record updated - thanks for helping out";
+	}
+	
+	public String Updaterecord(RockData rdata) {
+		rock.saveAndFlush(rdata);
+		return "REcord Edited";
 	}
 }

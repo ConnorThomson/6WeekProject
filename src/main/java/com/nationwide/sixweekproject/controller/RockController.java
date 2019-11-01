@@ -26,7 +26,11 @@ public class RockController {
 	public ArrayList<RockData> findAll(){
 		return rock.findAll();
 	}
-	
+	@CrossOrigin
+	@PutMapping("/rock/update")
+	public String Updaterecord(@RequestBody RockData rockdata) {
+		return rock.Updaterecord(rockdata);
+	}
 	@GetMapping("/rock/findbyartist/{artist}")
 	public ArrayList<RockData> findByArtist(@PathVariable String artist){
 		return rock.findByArtist(artist);
