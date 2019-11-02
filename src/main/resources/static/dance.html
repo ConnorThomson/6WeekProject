@@ -1,0 +1,227 @@
+<html>
+<script>
+// function to add new entries to the database
+function savedata(){
+        var Http=new XMLHttpRequest();
+        Http.open("POST","http://"+location.hostname+":8081/dance/add");
+        Http.setRequestHeader("Content-Type","application/json");
+        let data={
+            "artist": document.getElementById("danartadd").value,
+            "songtitle":document.getElementById("dantitadd").value,
+            "link":document.getElementById("danlinadd").value
+        };
+        Http.send(JSON.stringify(data));
+        alert("Thanks - record has now been added!!!!!"); 
+    }
+    //end of add function
+    //show all data
+    function showalldata(){
+        var Http=new XMLHttpRequest();
+        Http.open("GET","http://"+location.hostname+":8081/dance/showall");
+        Http.setRequestHeader("Content-Type","application/json");
+        Http.onload= function(){
+            screen(JSON.parse(Http.response));
+        };
+        Http.send();
+        };
+    //end of show all data
+    //displaying the data
+    function screen(data){
+        var A = 0;
+        var table = document.getElementById("dantable"); 
+        while (table.hasChildNodes()) {
+                table.removeChild(table.firstChild);
+        }
+        data.forEach(function(item){
+             
+            var row =table.insertRow(-1);
+            var c1=row.insertCell(0);
+            var c2=row.insertCell(1);
+            var c3=row.insertCell(2);
+            var c4=row.insertCell(3);
+            var c5=row.insertCell(4);
+            var c6=row.insertCell(5);
+
+            var editButton = document.createElement("button");
+            var delButton = document.createElement("button");
+
+            editButton.innerText = "Edit";
+            delButton.innerText = "Delete";
+
+            editButton.addEventListener("click", function edit() {
+                editDance(item, row);
+            });
+
+            delButton.addEventListener("click", function () {
+            deleteDance(item.songnum);
+            });
+
+            c1.innerHTML=item.songnum;
+            c2.innerHTML=item.artist;
+            c3.innerHTML=item.songtitle;
+            c4.innerHTML=item.link;
+            c5.appendChild(editButton);
+            c6.appendChild(delButton);
+            
+        });
+        A += A;
+    };
+    //end of display
+    //start of searching by artist
+    function searchArtist(){
+        let artist = document.getElementById("danartsea").value;
+        var Http=new XMLHttpRequest();
+        Http.open("GET", "http://"+location.hostname+":8081/dance/findbyartist/"+artist);
+        Http.setRequestHeader("Content-Type", "application/json");
+        Http.onload=function(){
+            screen(JSON.parse(Http.response))
+        }
+        Http.send();
+    }
+    //end of search by artist
+    //edit items
+    function editDance(info, row) {
+        while (row.hasChildNodes()) {
+            row.removeChild(row.firstChild);
+        }
+        var td1=document.createElement("td");
+        var td2=document.createElement("td");
+        var td3=document.createElement("td");
+        var td4=document.createElement("td");
+        var td5=document.createElement("td");
+        
+        
+        var songnum=document.createElement("input");
+        var songartist=document.createElement("input");
+        var songtitle=document.createElement("input");
+        var songlink=document.createElement("input");
+        var update=document.createElement("input");
+
+
+        songnum.value=info.songnum;
+        songartist.value=info.artist;
+        songtitle.value=info.songtitle;
+        songlink.value=info.link;
+        update.type="button";
+        update.value="Update";
+        update.onclick=function(){
+            var Http=new XMLHttpRequest();
+             Http.open("PUT","http://"+location.hostname+":8081/dance/update");
+            Http.setRequestHeader("Content-Type","application/json");
+            let data={
+                "songnum":songnum.value,
+                "artist":songartist.value ,
+                "songtitle":songtitle.value,
+                "link": songlink.value,
+             };
+             Http.onload=function(){
+                //screen(JSON.parse(Http.response)){
+                    showalldata();
+                }
+             
+
+            
+            Http.send(JSON.stringify(data));
+            alert("Thanks - record has now been updated!!!!!"); 
+            };
+        
+        td1.appendChild(songnum);
+        td2.appendChild(songartist);
+        td3.appendChild(songtitle);
+        td4.appendChild(songlink);
+        td5.appendChild(update);
+        
+        row.appendChild(td1);
+        row.appendChild(td2);
+        row.appendChild(td3);
+        row.appendChild(td4);
+        row.appendChild(td5);
+        
+    }
+   // button.removeEventListener("click", func);
+    // button.addEventListener("click", function () {
+    //     info.artist = c2.innerText;
+    //     info.songtitle = c3.innerText;
+    //     info.link = c4.innerText;
+        
+    // });
+    //finished editting items
+    function deleteDance(id) {
+    const http = new XMLHttpRequest();
+    const url = 'http://'+location.hostname+':8081/dance/delete/' + id;
+    http.open("DELETE", url);
+    http.onload = function (e) {
+        window.location.reload();
+        alert("Record successfully deleted - thanks for helping out");
+    }
+    http.send();
+}
+</script>
+<body style="background-color: skyblue; overflow:visible">
+    <!--start of title-->
+    <div id="dantitle" style = "position:absolute; top:0; left:350; background-color: midnightblue; height:110; width: 600;">
+        <span style="position: relative; top:5; left: 25; color: white; font-size: 500%;">
+            Dance Playlist
+        </span>
+    </div>
+    <!--end of title-->
+    <!--start of code for creation of creation box with all buttons-->
+
+    <div>
+    <div id="danadd" style="position: fixed; background-color: midnightblue; top:110; left: 0; height: 200; width: 300; color: white;">
+        <pre style="font-size: 120%">
+     Adding new songs
+        </pre>
+        <form>
+            <pre>
+Artist:      <input id="danartadd" type="text">
+Song Title:  <input id="dantitadd" type="text">
+Link:        <input id="danlinadd" type="text">
+            </pre>
+            <input id="danconfirm" type="button" value="Submit" onclick="savedata()">
+        </form>
+    </div>
+    <!--end of code for creation box-->
+    <!-- show all button-->
+    <div>
+        <button id="butshow" onclick="showalldata()" style="position: absolute; top: 115; left: 550">
+             Show All
+        </button>
+    </div>
+    <!--end of show all button-->
+    <!--back to genre button-->
+    <div>
+        <button id="underback" onclick="location.href='Genres.html'" style="position: absolute; top: 115; left: 640">
+            BACK
+        </button>
+    </div>
+    <!--end of back to genre button-->
+    <!--search by artist feature-->
+    <div id="danseaart" style="position: fixed; background-color: midnightblue; top:320; left: 0; height: 130; width: 300; color: white;">
+     <pre style="font-size: 120%;">    Search by Artist </pre>
+        <form>
+            <pre>
+Artist:      <input id="danartsea" type="text">
+            </pre>
+            <input id="danseacon" type="button" value="Submit" onclick="searchArtist()">
+        </form>
+    </div>
+    <!-- end of search by artist feature-->
+    <!--main table-->
+    <div style="position:absolute; background-color: midnightblue; top:150; left: 350; height: 1000; width: 1000; color: white;">
+        <table id="dansection" class="table" style="font-size: 150%; color: white; border: black">
+             <thead>
+                <th>Song Number</th>
+                <th>Artist</th>
+                <th>Song Title</th>
+                <th>Link</th>
+            </thead>
+            <tbody id="dantable" class="container">
+
+            </tbody>
+        </table>
+    </div>
+    <!--end of main table-->
+</div>
+</body>
+</html>
